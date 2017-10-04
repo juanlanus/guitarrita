@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Language" content="es">
+  <title>La Guitarrita - pedidos</title>
+  <link rel="stylesheet" href="res/doc.css">
+  <script src="res/jquery.js"></script>
+  <script src="res/doc.js"></script>
+  <script src="res/jquery.quicksearch.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      var LG = LG || {};
+
+      LG.selectMenuItem = function( $this ){
+        $( 'li.menuItem.selected' ).removeClass( 'selected' );
+        $this.addClass( 'selected' );
+      };
+
+      LG.agregarItemAlPedido = function( $this ){
+        var nuevoItem = $( '<tr>' + $this.text() + '</tr>' );
+        $( 'li.menuItem.selected' ).removeClass( 'selected' );
+      };
+
+      // delete this event handler
+      $( '#select-rubro li' ).on(
+        'click',
+        function( event ){
+          var $this = $( event.target );
+          var numRubro = $this.text().split( ' ' )[0]; // pick "1" from "1 bebidas"
+          $( '.rubro' ).css( 'display', 'none' );
+          $( '#rubro-' + numRubro ).css( 'display', 'block' );
+          $( '#select-rubro li' ).removeClass( 'rubroSelected' );
+          $this.addClass( 'rubroSelected' );
+        }
+      );
+
+      // select menu item on click
+      $( '.menuItem' ).on(
+        'click',
+        function( event ){
+          var $this = $( event.target );
+          if( $this.hasClass( 'selected' ) ){
+            LG.agregarItemAlPedido( $this );
+          } else {
+            LG.selectMenuItem( $this );
+          }
+        }
+      );
+
+      // enable quicksearch
+      var qs = $('#buscaMenu').quicksearch(
+        '#rubrosTodos li',
+        {
+          removeDiacritics: true,
+          show: function () {
+            $(this).removeClass('hiddenByQS');
+          },
+          hide: function () {
+            $(this).addClass('hiddenByQS');
+          },
+        }
+      );
+
+      $('#buscaMenu').focus();
+
+    });
+  </script>
+  <style>
+    table { border-collapse:collapse; border-color:rgb(128,128,128); }
+    th { font-size:70%; color:rgb(128,128,128); background-color:rgb(240,240,240); }
+    body { font-family:sans-serif; }
+
+    #elPedido { background-color:rgb(240,240,240); }
+    #content { position:relative; }
+
+    /* formulario de input de un item del pedido */
+    .newItem { position:fixed; top:333px; left:0; z-index:99; }
+    .newItem { background-color:yellow; width:100%; min-height:120px; 
+      border:1px solid black; opacity:0.9; }
+    .newItem table { outline:1px dotted blue; }
+    .newItem table td { vertical-align:top; }
+    .newItem .newProducto table { width:100%; }
+    .newCodigo { width:2.5em; }
+
+
+    /* listado de los items del pedido */
+    .pedPedido {  }
+    .pedPedido th { }
+    .pedItem { background-color:rgb(252,252,252); position:relative;
+      margin-top:4px; }
+    .pedCodigo { vertical-align:top; color:rgb(192,192,192);
+      padding-top:5px; width:1.8em; }
+    .pedCantidad { font-size:120%; 
+      vertical-align:top; padding:0 4px 0 0; width:2em;
+      text-align:right; }
+    .pedDescripcion { padding:4px 4px 0 4px; }
+    .pedPrecio { font-size:120%; color:rgb(192,192,192); 
+      vertical-align:top; padding:0 4px 0 0; width:2.5em;
+      text-align:right; }
+    .pedImporte { font-size:120%; 
+      vertical-align:top; padding:0 4px 0 0; width:3.5em;
+      text-align:right; }
+    .pedEliminar { position:absolute; top:0; right:0; display:none; }
+
+    .pedItem.pedSelected { background-color:blue; color:white; }
+
+    #buscaMenuBox { }
+    #buscaMenu { width:100%; height:100%; padding:0; border:0;
+      font-size:100%; background:transparent; outline:none; }
+    .hiddenByQS { display:none; }
+
+    #select-rubro { color:rgb(128,128,128); }
+    .rubroSelected { color:white; background-color:rgb(80,80,80); }
+
+    li.menuItem { margin-left:-40px; }
+    li.menuItem.selected { color:white; background-color:rgb(80,80,192); }
+
+  </style>
+</head>
+
+<body>
+  <div id="content">
+
+
+    <h3>La Guitarrita - menú web</h3>
+
+    <!-- form para input de un item del pedido -->
+    <div class="newItem">
+      <div class="newProducto">
+        <table>
+          <tr>
+            <td class="newCodigo" tabindex="0">
+              XXX&nbsp;
+            </td>
+            <td class="newDescripcion" tabindex="0">
+              <div style="display:none;">
+                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&nbsp;
+              </div>
+              <div id="buscaMenuBox">
+                <input type="search" id="buscaMenu" tabindex="1"
+                placeholder="escriba algo del menú"/>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="newQQQ" tabindex="0">
+              XXX&nbsp;
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="dcDatosCliente">
+      <div class="dcNombre">Agustín</div>
+      <div class="dcDomicilio">Ugarte 2158 15A entre Arcos y Cuba</div>
+      <div class="dcObservaciones">Tocar el portero eléctrico mucho,
+        por que no se oye bien</div>
+    </div>
+
+    <table style="width:100%;">
+      <colgroup><col><col></colgroup>
+      <tbody>
+        <tr>
+          <th>pedido</th>
+          <th>menu</th>
+        </tr>
+        <tr>
+          <td style="vertical-align:top;">
+
+            <table id="elPedido" class="pedPedido" style="width:100%;">
+              <tr>
+                <th>cod</th>
+                <th>artículo</th>
+                <th>precio</th>
+                <th>cant</th>
+                <th>$</th>
+              </tr>
+              <!-- **************************************************************** -->
+              <tr class="pedItem pedInput">
+                <td class="pedCodigo">
+                  &nbsp;
+                </td>
+                <td class="pedDescripcion">
+                </td>
+                <td class="pedPrecio">
+                </td>
+                <td class="pedCantidad">
+                </td>
+                <td class="pedImporte">
+                </td>
+              </tr>
+              <!-- prototipo de item de pedido -->
+              <tr class="pedItem">
+                <td class="pedCodigo">
+                  123
+                </td>
+                <td class="pedDescripcion">
+                   Pizza Napolitana
+                  <br>&nbsp;&nbsp;sin ajo
+                  <br>&nbsp;&nbsp;con aceitunas
+                </td>
+                <td class="pedPrecio">
+                  290
+                </td>
+                <td class="pedCantidad">
+                  1
+                </td>
+                <td class="pedImporte">
+                  290
+                </td>
+              </tr>
+              <tr class="pedItem pedSelected">
+                <td class="pedCodigo">
+                  123
+                </td>
+                <td class="pedDescripcion">
+                   Pizza Muzzarella
+                </td>
+                <td class="pedPrecio">
+                  250
+                </td>
+                <td class="pedCantidad">
+                  10
+                </td>
+                <td class="pedImporte">
+                  2500
+                </td>
+              </tr>
+              <tr class="pedItem">
+                <td class="pedCodigo">
+                  123
+                </td>
+                <td class="pedDescripcion">
+                   Empanada de carne picada a cuchillo en trocitos pequeños
+                </td>
+                <td class="pedPrecio">
+                  32
+                </td>
+                <td class="pedCantidad">
+                  800
+                </td>
+                <td class="pedImporte">
+                  25600
+                </td>
+              </tr>
+          </td>
+          <!-- **************************************************************** -->
+        </tr>
+            </table>
+            </td>
+            <td>
+
+            <ul id="rubrosTodos">
+              <li id="rubro-1" class="rubro">
+                pizzas
+                <ul style="list-style-type:none;">
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y albahaca">102 ALBAHACA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, rodajas de ananÃ¡á y jamón cocido natural.">103 ANANA con JAMON</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y rodajas de ananÃ¡á.">104 ANANA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate y filetes de anchoas.">106 ANCHOAS</li>
+                  <li class="menuItem" title="pizza: Muzzarella, lomito de atún al natural, rodajas de tomate y cebolla">107 Atún</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, anchoas, morrones, longaniza y jamón cocido natural">108 ATOMICA</li>
+                  <li class="menuItem" title="pizza: Rodajas de cebolla y lomitos de atún.">109 ATUN</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, espinaca, berenjenas asadas, muzzarella y morrones (ajo a gusto).">110 BERENJENAS</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, anchoas, longaniza y morrón">111 BOMBA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, morrones y bondiola">112 Bondiola</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y longaniza.">113 CALABRESA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, morrones y cantimpalo.">114 CANTIMPALO</li>
+                  <li class="menuItem" title="pizza: Muzzarella, tomate, albahaca y aceitunas negras">115 Caprese</li>
+                  <li class="menuItem" title="pizza: Rodajas de cebolla.">116 CEBOLLA</li>
+                  <li class="menuItem" title="pizza: Jamón cocido natural, muzzarella, cebolla de verdeo y champignones frescos.">117 CHAMPIGNONES</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate y doble porción de muzzarella.">118 DOBLE MUZZARELLA</li>
+                  <li class="menuItem" title="pizza: Pizza rellena con muzzarella, jamón cocido natural, longaniza, y morrón, cubierta con provolone">119 DON GRILLO</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, salsa blanca, muzzarella, esparragos, cebolla de verdeo y provolone rallado.">120 ESPARRAGOS</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, rodajas de tomate, longaniza y huevo picado.">121 FIORENTINA</li>
+                  <li class="menuItem" title="pizza: Muzzarella, rodajas de cebolla y jamón cocido natural.">122 FUGAZZETTA con JAMON</li>
+                  <li class="menuItem" title="pizza: Rodajas de cebolla, muzzarella, jamón cocido natural y provolone.">123 FUGAZZETTA con JAMON y PROVOLONE</li>
+                  <li class="menuItem" title="pizza: Rodajas de cebolla, muzzarella y provolone.">124 FUGAZZETTA con PROVOLONE</li>
+                  <li class="menuItem" title="pizza: Muzzarella y rodajas de cebolla.">125 FUGAZZETTA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y huevo picado.">126 HUEVO</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y choclo desgranado.">127 HUMITA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, jamón cocido natural y huevo picado.">128 JAMóN y HUEVO</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y jamón cocido natural.">129 JAMON</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, morrones y jamón cocido natural.">130 JAMON y MORRONES</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, jamón cocido natural, muzzarella, morrones asados, huevo picado y aceitunas negras trozadas.">131 LA MAQUINA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y morrones asados.">132 MORRONES</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y filetes de anchoas.">133 MUZZARELLA con ANCHOAS</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate y muzzarella.">134 MUZZARELLA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, rodajas de tomate, jamón cocido natural y albahaca. (ajo a gusto).">135 NAPOLITANA con JAMON</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, rodajas de tomate y albahaca (ajo a gusto).">136 NAPOLITANA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, morrones asados, rodajas de ananÃ¡á, champignones, tomates secos y rúcula.">137 NAVIDEÑA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, palmitos, jamón cocido natural y huevo picado.">138 PALMITOS con JAMóN</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, palmitos y huevo picado.">139 PALMITOS</li>
+                  <li class="menuItem" title="pizza: Muzzarella, rodajas de cebolla, panceta y huevos.">140 PANCETA A CABALLO</li>
+                  <li class="menuItem" title="pizza: Muzzarella, rodajas de cebolla y panceta.">141 PANCETA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, rodajas de salchicha y papas pay.">142 PAPA-CHICHA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate y ajo picado.">143 PIZZAIOLA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y provolone. Y jamon cocido natural">144 PROVOLONE con JAMóN</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y provolone.">145 PROVOLONE</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, rodajas de tomate y huevo picado.">146 ROMANA</li>
+                  <li class="menuItem" title="pizza: Rodajas de cebolla, muzzarella y queso azul.">147 ROQUEFORT con CEBOLLA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella y queso azul.">148 ROQUEFORT</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, tomates secos, jamón crudo y rúcula fresca.">149 RUCULA con JAMON CRUDO</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, tomates seco y rúcula fresca.">150 RUCULA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, ajíes en vinagre y jamón cocido natural.">151 SICILIANA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, provolone y queso azul.">152 TRES QUESOS</li>
+                  <li class="menuItem" title="pizza: Espinaca, salsa blanca, muzzarella y provolone.">153 VERDURA con SALSA BLANCA</li>
+                  <li class="menuItem" title="pizza: Salsa de tomate, muzzarella, espinaca salteada con ajo y provolone y huevo picado.">154 VERDURA</li>
+                </ul>
+              </li>
+
+              <li id="rubro-2" class="rubro">
+                bebidas
+                <ul style="list-style-type:none;">
+                  <li class="menuItem" title="bebida: ">201 Agua mineral "bon aqua"</li>
+                  <li class="menuItem" title="bebida: ">202 Agua Saborizada (AQUARIUS)</li>
+                  <li class="menuItem" title="bebida: ">203 Gaseosas de 1.5 litros (COCA-COLA)</li>
+                  <li class="menuItem" title="bebida: ">204 Gaseosas de 330 ml. (COCA-COLA)</li>
+                  <li class="menuItem" title="bebida: ">205 Jugo de Naranja Natural</li>
+                  <li class="menuItem" title="bebida: ">206 Licuado con Agua</li>
+                  <li class="menuItem" title="bebida: ">207 Licuado con Jugo o Leche</li>
+                  <li class="menuItem" title="bebida: ">208 Limonada</li>
+                  <li class="menuItem" title="bebida: ">209 Soda (Sifón 500 ml.)</li>
+                </ul>
+              </li>
+
+              <li id="rubro-3" class="rubro">
+                postres
+                <ul style="list-style-type:none;">
+                  <li class="menuItem" title="postre: ">301 Almendrado</li>
+                  <li class="menuItem" title="postre: ">302 Banana con Dulce de Leche y/o Crema</li>
+                  <li class="menuItem" title="postre: 3 Bochas de Helado a elección, Banana, Chocolate Caliente, Dulce de Leche y Crema Chantilly">303 Banana Split</li>
+                  <li class="menuItem" title="postre: ">304 Bombón Escocés</li>
+                  <li class="menuItem" title="postre: ">305 Casata</li>
+                  <li class="menuItem" title="postre: ">306 Charlotte</li>
+                  <li class="menuItem" title="postre: ">307 Chocotorta</li>
+                  <li class="menuItem" title="postre: Helado de Crema sobre Merengue y dulce de Leche, cubierto con Almendras Caramelizadas y Chocolate caliente">308 Chulito</li>
+                  <li class="menuItem" title="postre: Helado almendrado, crema Chantilly y Whisky">309 Don Pedro</li>
+                  <li class="menuItem" title="postre: ">300 Duraznos en Almíbar</li>
+                  <li class="menuItem" title="postre: ">311 Ensalada de Frutas con Helado</li>
+                  <li class="menuItem" title="postre: ">312 Ensalada de Frutas</li>
+                  <li class="menuItem" title="postre: ">313 Flan Casero</li>
+                  <li class="menuItem" title="postre: ">314 Flan Mixto</li>
+                  <li class="menuItem" title="postre: ">315 Frutillas con Crema o Jugo de Naranja</li>
+                  <li class="menuItem" title="postre: 1, 2 o 3 Bochas. &nbsp; Dulce de Leche, Crema Americana, Chocolate, Frutilla, Vainilla y Limón">316 Helados El Fundador</li>
+                  <li class="menuItem" title="postre: Helado Casata, Crema Chantilly, Duraznos en Almibar, Obleas y Chocolate Caliente.">317 La Guitarrita</li>
+                  <li class="menuItem" title="postre: Helado Casata, Crema Chantilly, Dulce de Leche, Obleas y Chocolate Caliente">318 Marcianito</li>
+                  <li class="menuItem" title="postre: Mixto: Crema y Duraznos/Crema y Frutillas">319 Merengue</li>
+                  <li class="menuItem" title="postre: ">320 Mousse de Chocolate</li>
+                  <li class="menuItem" title="postre: ">321 Panqueque con Dulce de Leche</li>
+                  <li class="menuItem" title="postre: ">322 Panqueque con Dulce de Leche y Helado</li>
+                  <li class="menuItem" title="postre: ">323 Queso y Dulce (membrillo o batata)</li>
+                  <li class="menuItem" title="postre: ">324 Tarantella</li>
+                  <li class="menuItem" title="postre: ">325 Tiramisú</li>
+                </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+
+    <p></p>
+  </div>
+</body>
