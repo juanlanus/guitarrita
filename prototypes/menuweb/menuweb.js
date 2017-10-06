@@ -1,6 +1,6 @@
   var LG = LG || {};
 
-  LG.menu = [
+  LG.menuSinCodigos = [
       { id:01, rubro:'sin tacc', nombre:'Muzzarella individual sin T.A.C.C.', descripcion:'' },
 
       { id:01, rubro:'aperitivos', nombre:'Fernet', descripcion:'' },
