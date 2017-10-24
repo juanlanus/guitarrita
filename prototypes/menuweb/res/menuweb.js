@@ -128,7 +128,7 @@
     constructor( menuItem, cantidad, opciones ){ // opciones, no definido, es un string JSON
       this.menuItem = menuItem;
       this.cantidad = cantidad;
-      this.optiones = opciones;
+      this.opciones = opciones;
     };
 
     agregarAlPedido( pedido ){
@@ -178,34 +178,6 @@
 
   // ----------------------------------------------------------------------
   $(document).ready(function () {
-
-  /* MW.rubros = {
-      "1": { rubro: "1", nombre:"pizzas" },
-      "2": { rubro: "2", nombre:"bebidas" },
-      "3": { rubro: "3", nombre:"postres" }
-    };
-    
-<script type="text/template" id="template">
-    <li id="rubro-<%= rubroId %>" class="rubro">
-      <%= rubroNombre %>
-      <ul style="list-style-type:none;">
-        <%
-          // procesar el menu seleccioando los ítems del rubro
-        %>
-        <li class="menuItem" title="bebida: ">201 Agua mineral "bon aqua"</li>
-        <li class="menuItem" title="bebida: ">202 Agua Saborizada (AQUARIUS)</li>
-        <li class="menuItem" title="bebida: ">203 Gaseosas de 1.5 litros (COCA-COLA)</li>
-        <li class="menuItem" title="bebida: ">204 Gaseosas de 330 ml. (COCA-COLA)</li>
-        <li class="menuItem" title="bebida: ">205 Jugo de Naranja Natural</li>
-        <li class="menuItem" title="bebida: ">206 Licuado con Agua</li>
-        <li class="menuItem" title="bebida: ">207 Licuado con Jugo o Leche</li>
-        <li class="menuItem" title="bebida: ">208 Limonada</li>
-        <li class="menuItem" title="bebida: ">209 Soda (Sifón 500 ml.)</li>
-      </ul>
-    </li>
-</script>
-      
-  */
 
     // armado del menu con la info de la base de datos
     MW.armarMenu(){ // uno solo por ahora
