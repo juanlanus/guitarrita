@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Test de la class del menú</title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="underscore.js"></script>
+  <script>
+    MW = {};
+
+    MW.rubros = {
+        "1": { rubro: "1", nombre:"pizzas" },
+        "2": { rubro: "2", nombre:"bebidas" },
+        "3": { rubro: "3", nombre:"postres" }
+      };
+
+    MW.menuInput = [ // un array de rubros conteniendo ítems
+      {
+        rubroId: "1",
+        rubroNombre:"pizzas",
+        items: [
+          { codigo:"102", nombre:"ALBAHACA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y albahaca" },
+          { codigo:"103", nombre:"ANANA con JAMON", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, rodajas de ananá y jamón cocido natural." },
+          { codigo:"104", nombre:"ANANA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y rodajas de ananá." },
+          { codigo:"106", nombre:"ANCHOAS", rubro:"1", descripcion:"pizza: Salsa de tomate y filetes de anchoas." },
+          { codigo:"107", nombre:"Atún", rubro:"1", descripcion:"pizza: Muzzarella, lomito de atún al natural, rodajas de tomate y cebolla" },
+          { codigo:"108", nombre:"ATOMICA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, anchoas, morrones, longaniza y jamón cocido natural" },
+          { codigo:"109", nombre:"ATUN", rubro:"1", descripcion:"pizza: Rodajas de cebolla y lomitos de atún." },
+          { codigo:"110", nombre:"BERENJENAS", rubro:"1", descripcion:"pizza: Salsa de tomate, espinaca, berenjenas asadas, muzzarella y morrones (ajo a gusto)." },
+          { codigo:"111", nombre:"BOMBA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, anchoas, longaniza y morrón" },
+          { codigo:"112", nombre:"Bondiola", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, morrones y bondiola" },
+          { codigo:"113", nombre:"CALABRESA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y longaniza." },
+          { codigo:"114", nombre:"CANTIMPALO", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, morrones y cantimpalo." },
+          { codigo:"115", nombre:"Caprese", rubro:"1", descripcion:"pizza: Muzzarella, tomate, albahaca y aceitunas negras" },
+          { codigo:"116", nombre:"CEBOLLA", rubro:"1", descripcion:"pizza: Rodajas de cebolla." },
+          { codigo:"117", nombre:"CHAMPIGNONES", rubro:"1", descripcion:"pizza: Jamón cocido natural, muzzarella, cebolla de verdeo y champignones frescos." },
+          { codigo:"118", nombre:"DOBLE MUZZARELLA", rubro:"1", descripcion:"pizza: Salsa de tomate y doble porción de muzzarella." },
+          { codigo:"119", nombre:"DON GRILLO", rubro:"1", descripcion:"pizza: Pizza rellena con muzzarella, jamón cocido natural, longaniza, y morrón, cubierta con provolone" },
+          { codigo:"120", nombre:"ESPARRAGOS", rubro:"1", descripcion:"pizza: Salsa de tomate, salsa blanca, muzzarella, esparragos, cebolla de verdeo y provolone rallado." },
+          { codigo:"121", nombre:"FIORENTINA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, rodajas de tomate, longaniza y huevo picado." },
+          { codigo:"122", nombre:"FUGAZZETTA con JAMON", rubro:"1", descripcion:"pizza: Muzzarella, rodajas de cebolla y jamón cocido natural." },
+          { codigo:"123", nombre:"FUGAZZETTA con JAMON y PROVOLONE", rubro:"1", descripcion:"pizza: Rodajas de cebolla, muzzarella, jamón cocido natural y provolone." },
+          { codigo:"124", nombre:"FUGAZZETTA con PROVOLONE", rubro:"1", descripcion:"pizza: Rodajas de cebolla, muzzarella y provolone." },
+          { codigo:"125", nombre:"FUGAZZETTA", rubro:"1", descripcion:"pizza: Muzzarella y rodajas de cebolla." },
+          { codigo:"126", nombre:"HUEVO", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y huevo picado." },
+          { codigo:"127", nombre:"HUMITA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y choclo desgranado." },
+          { codigo:"128", nombre:"JAMóN y HUEVO", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, jamón cocido natural y huevo picado." },
+          { codigo:"129", nombre:"JAMON", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y jamón cocido natural." },
+          { codigo:"130", nombre:"JAMON y MORRONES", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, morrones y jamón cocido natural." },
+          { codigo:"131", nombre:"LA MAQUINA", rubro:"1", descripcion:"pizza: Salsa de tomate, jamón cocido natural, muzzarella, morrones asados, huevo picado y aceitunas negras trozadas." },
+          { codigo:"132", nombre:"MORRONES", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y morrones asados." },
+          { codigo:"133", nombre:"MUZZARELLA con ANCHOAS", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y filetes de anchoas." },
+          { codigo:"134", nombre:"MUZZARELLA", rubro:"1", descripcion:"pizza: Salsa de tomate y muzzarella." },
+          { codigo:"135", nombre:"NAPOLITANA con JAMON", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, rodajas de tomate, jamón cocido natural y albahaca. (ajo a gusto)." },
+          { codigo:"136", nombre:"NAPOLITANA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, rodajas de tomate y albahaca (ajo a gusto)." },
+          { codigo:"137", nombre:"NAVIDEÑA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, morrones asados, rodajas de ananá, champignones, tomates secos y rúcula." },
+          { codigo:"138", nombre:"PALMITOS con JAMóN", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, palmitos, jamón cocido natural y huevo picado." },
+          { codigo:"139", nombre:"PALMITOS", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, palmitos y huevo picado." },
+          { codigo:"140", nombre:"PANCETA A CABALLO", rubro:"1", descripcion:"pizza: Muzzarella, rodajas de cebolla, panceta y huevos." },
+          { codigo:"141", nombre:"PANCETA", rubro:"1", descripcion:"pizza: Muzzarella, rodajas de cebolla y panceta." },
+          { codigo:"142", nombre:"PAPA-CHICHA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, rodajas de salchicha y papas pay." },
+          { codigo:"143", nombre:"PIZZAIOLA", rubro:"1", descripcion:"pizza: Salsa de tomate y ajo picado." },
+          { codigo:"144", nombre:"PROVOLONE con JAMóN", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y provolone. Y jamon cocido natural" },
+          { codigo:"145", nombre:"PROVOLONE", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y provolone." },
+          { codigo:"146", nombre:"ROMANA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, rodajas de tomate y huevo picado." },
+          { codigo:"147", nombre:"ROQUEFORT con CEBOLLA", rubro:"1", descripcion:"pizza: Rodajas de cebolla, muzzarella y queso azul." },
+          { codigo:"148", nombre:"ROQUEFORT", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella y queso azul." },
+          { codigo:"149", nombre:"RUCULA con JAMON CRUDO", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, tomates secos, jamón crudo y rúcula fresca." },
+          { codigo:"150", nombre:"RUCULA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, tomates seco y rúcula fresca." },
+          { codigo:"151", nombre:"SICILIANA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, ajíes en vinagre y jamón cocido natural." },
+          { codigo:"152", nombre:"TRES QUESOS", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, provolone y queso azul." },
+          { codigo:"153", nombre:"VERDURA con SALSA BLANCA", rubro:"1", descripcion:"pizza: Espinaca, salsa blanca, muzzarella y provolone." },
+          { codigo:"154", nombre:"VERDURA", rubro:"1", descripcion:"pizza: Salsa de tomate, muzzarella, espinaca salteada con ajo y provolone y huevo picado." }
+        ]
+      },
+      {
+        rubroId:"2",
+        rubroNombre:"bebidas",
+        items: [
+          { codigo:"201", nombre:"Agua mineral bon aqua", rubro:"2", descripcion:"bebida: " },
+          { codigo:"202", nombre:"Agua Saborizada (AQUARIUS)", rubro:"2", descripcion:"bebida: " },
+          { codigo:"203", nombre:"Gaseosas de 1.5 litros (COCA-COLA)", rubro:"2", descripcion:"bebida: " },
+          { codigo:"204", nombre:"Gaseosas de 330 ml. (COCA-COLA)", rubro:"2", descripcion:"bebida: " },
+          { codigo:"205", nombre:"Jugo de Naranja Natural", rubro:"2", descripcion:"bebida: " },
+          { codigo:"206", nombre:"Licuado con Agua", rubro:"2", descripcion:"bebida: " },
+          { codigo:"207", nombre:"Licuado con Jugo o Leche", rubro:"2", descripcion:"bebida: " },
+          { codigo:"208", nombre:"Limonada", rubro:"2", descripcion:"bebida: " },
+          { codigo:"209", nombre:"Soda (Sifón 500 ml.)", rubro:"2", descripcion:"bebida: " }
+        ]
+      },
+      {
+        rubroId:"3",
+        rubroNombre:"postres",
+        items: [
+          { codigo:"301", nombre:"Almendrado", rubro:"3", descripcion:"postre: " },
+          { codigo:"302", nombre:"Banana con Dulce de Leche y/o Crema", rubro:"3", descripcion:"postre: " },
+          { codigo:"303", nombre:"Banana Split", rubro:"3", descripcion:"postre: 3 Bochas de Helado a elección, Banana, Chocolate Caliente, Dulce de Leche y Crema Chantilly" },
+          { codigo:"304", nombre:"Bombón Escocés", rubro:"3", descripcion:"postre: " },
+          { codigo:"305", nombre:"Casata", rubro:"3", descripcion:"postre: " },
+          { codigo:"306", nombre:"Charlotte", rubro:"3", descripcion:"postre: " },
+          { codigo:"307", nombre:"Chocotorta", rubro:"3", descripcion:"postre: " },
+          { codigo:"308", nombre:"Chulito", rubro:"3", descripcion:"postre: Helado de Crema sobre Merengue y dulce de Leche, cubierto con Almendras Caramelizadas y Chocolate caliente" },
+          { codigo:"309", nombre:"Don Pedro", rubro:"3", descripcion:"postre: Helado almendrado, crema Chantilly y Whisky" },
+          { codigo:"300", nombre:"Duraznos en Almíbar", rubro:"3", descripcion:"postre: " },
+          { codigo:"311", nombre:"Ensalada de Frutas con Helado", rubro:"3", descripcion:"postre: " },
+          { codigo:"312", nombre:"Ensalada de Frutas", rubro:"3", descripcion:"postre: " },
+          { codigo:"313", nombre:"Flan Casero", rubro:"3", descripcion:"postre: " },
+          { codigo:"314", nombre:"Flan Mixto", rubro:"3", descripcion:"postre: " },
+          { codigo:"315", nombre:"Frutillas con Crema o Jugo de Naranja", rubro:"3", descripcion:"postre: " },
+          { codigo:"316", nombre:"Helados El Fundador", rubro:"3", descripcion:"postre: 1, 2 o 3 Bochas. &nbsp; Dulce de Leche, Crema Americana, Chocolate, Frutilla, Vainilla y Limón" },
+          { codigo:"317", nombre:"La Guitarrita", rubro:"3", descripcion:"postre: Helado Casata, Crema Chantilly, Duraznos en Almibar, Obleas y Chocolate Caliente." },
+          { codigo:"318", nombre:"Marcianito", rubro:"3", descripcion:"postre: Helado Casata, Crema Chantilly, Dulce de Leche, Obleas y Chocolate Caliente" },
+          { codigo:"319", nombre:"Merengue", rubro:"3", descripcion:"postre: Mixto: Crema y Duraznos/Crema y Frutillas" },
+          { codigo:"320", nombre:"Mousse de Chocolate", rubro:"3", descripcion:"postre: " },
+          { codigo:"321", nombre:"Panqueque con Dulce de Leche", rubro:"3", descripcion:"postre: " },
+          { codigo:"322", nombre:"Panqueque con Dulce de Leche y Helado", rubro:"3", descripcion:"postre: " },
+          { codigo:"323", nombre:"Queso y Dulce (membrillo o batata)", rubro:"3", descripcion:"postre: " },
+          { codigo:"324", nombre:"Tarantella", rubro:"3", descripcion:"postre: " },
+          { codigo:"325", nombre:"Tiramisú", rubro:"3", descripcion:"postre: " }
+        ]
+      }
+    ];
+
+      </script>
+    </head>
+
+    <body>
+      <h1>Test de la class del menú</h1>
+
+      <div id="menuContainer">MENU:</div>
+
+      <script type="text/template" id="templateMenuDelivery">
+        <ul id="rubrosTodos">
+          <% _.each( MW.menuInput, function( elRubro ){ %>
+            <li id="rubro-<%= elRubro.rubroId %>" class="rubro"><%= elRubro.rubroNombre %>
+              <ul style="list-style-type:none;">
+              <% _.each( elRubro.items, function( item ){ %>
+                  <li class="menuItem" rubro=<%= elRubro.rubroId %> title="<%= item.descripcion %>"><%= item.codigo %> <%= item.nombre %></li>
+              <% }); %>
+              </ul>
+            </li>
+          <% }); %>
+        </ul>
+      </script>
+
+      <script>
+
+  // ---------- menu ------------------------------------------------------
+  class menu 
+
+    constructor( menuTipo, opciones ){
+      this.menuTipo = menuTipo; // delivery, salón, mostrador, ...
+      this.opciones = opciones;
+    };
+
+    getDatosMenu( ){
+    // acceso a la base de datos para leer los datos de este tipo de menú
+      return MW.menuInput; // TODO: retorna un literal de pruebas
+    };
+
+    renderMenu( 'delivery' ){
+      // retorna el HTML para renderizar el menú en el formato requerido
+    };
+
+        // render menu
+        _.templateSettings.variable = 'rc';
+
+        var $elMenu = $( '<ul id="rubrosTodos" />' );
+
+        MW.menuTemplate = _.template( $( 'script#templateMenuDelivery' ).html());
+
+        var QQQ = MW.menuTemplate( MW.menuInput );
+        $( '#menuContainer' ).append( MW.menuTemplate( MW.menuInput ));
+
+        var qqq = 0;
+  // ----------------------------------------------------------------------
+      </script>
+
+    </body>
+    </html>
+
